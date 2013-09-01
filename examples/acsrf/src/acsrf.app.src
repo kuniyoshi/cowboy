@@ -1,0 +1,11 @@
+{application,
+    acsrf,
+    [{description, "Cowboy Anti. CSRF example."},
+     {vsn, "1"},
+     {modules, []},
+     {registered, []},
+     {applications, [kernel,
+                     stdlib,
+                     cowboy]},
+     {mod, {acsrf_app, []}},
+     {env, []}]}.
