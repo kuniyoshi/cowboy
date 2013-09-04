@@ -1,7 +1,7 @@
 -module(middleware_acsrf).
--export([execute/2]).
 -export([encrypt/1, encrypt/2]).
 -export([hide/2, hide/3]).
+-export([execute/2]).
 -define(ACSRF_KEY, <<"AL8sEOAL8Sftk9x_F6tmpodLvy2xxCV4">>).
 -define(ACSRF_NAME, atom_to_binary(?MODULE, utf8)).
 
@@ -29,7 +29,6 @@ hide(Html, Key, Options) ->
                [global]).
 
 execute(Req, Env) ->
-    io:format("~p:execute/2~n", [?MODULE]),
     Html = cowboy_req:get(resp_body, Req),
     SessionId = <<"pRlm_E5c1ruzdItraQjQe1oUWAe1gxdF">>,
     Html2 = hide(Html, SessionId),

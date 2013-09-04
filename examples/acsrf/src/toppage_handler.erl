@@ -7,7 +7,6 @@ init(_Transport, Req, []) ->
     {ok, Req, undefined}.
 
 handle(Req, State) ->
-    io:format("~p:handle/2~n", [?MODULE]),
     Html = <<"<html><head><title>ACSRF</title></head><body><form></form></body></html>">>,
     Req2 = cowboy_req:set_resp_body(Html, Req),
     {ok, Req2, State}.
