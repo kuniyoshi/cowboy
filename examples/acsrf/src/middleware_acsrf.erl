@@ -29,7 +29,7 @@ hide(Html, Key, Options) ->
                [global]).
 
 execute(Req, Env) ->
-    Html = cowboy_req:get(resp_body, Req),
+    Html = cowboy_req:resp_body(Req),
     SessionId = <<"pRlm_E5c1ruzdItraQjQe1oUWAe1gxdF">>,
     Html2 = hide(Html, SessionId),
     cowboy_req:reply(200, [], Html2, Req),
