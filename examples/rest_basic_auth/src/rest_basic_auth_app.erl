@@ -1,7 +1,7 @@
 %% Feel free to use, reuse and abuse the code in this file.
 
 %% @private
--module(eventsource_app).
+-module(rest_basic_auth_app).
 -behaviour(application).
 
 %% API.
@@ -13,18 +13,13 @@
 start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile([
 		{'_', [
-			{"/eventsource", eventsource_handler, []},
-			{"/", cowboy_static, [
-				{directory, {priv_dir, eventsource, []}},
-				{file, <<"index.html">>},
-				{mimetypes, [{<<".html">>, [<<"text/html">>]}]}
-			]}
+			{"/", toppage_handler, []}
 		]}
 	]),
 	{ok, _} = cowboy:start_http(http, 100, [{port, 8080}], [
 		{env, [{dispatch, Dispatch}]}
 	]),
-	eventsource_sup:start_link().
+	rest_basic_auth_sup:start_link().
 
 stop(_State) ->
 	ok.
