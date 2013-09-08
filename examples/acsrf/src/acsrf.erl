@@ -1,7 +1,7 @@
--module(cowboy_acsrf).
+-module(acsrf).
 -export([encrypt/1, encrypt/2]).
 -export([hide/2, hide/3]).
--export([execute/4]).
+-export([protect/4]).
 -define(ACSRF_KEY, <<"AL8sEOAL8Sftk9x_F6tmpodLvy2xxCV4">>).
 -define(ACSRF_NAME, atom_to_binary(?MODULE, utf8)).
 
@@ -29,7 +29,7 @@ hide(Html, Key, Options) ->
     Html2 = binary:replace(Html, <<"</form>">>, Replaced, [global]),
     Html2.
 
-execute(200, Headers, Body, Req) ->
+protect(200, Headers, Body, Req) ->
     SessionId = <<"C_m7O4HRq_2Pb4v4mhJnyC37Eyq_1ELf">>,
     Body2 = hide(Body, SessionId),
     Headers2 = lists:keyreplace(<<"content-length">>,
@@ -38,5 +38,5 @@ execute(200, Headers, Body, Req) ->
                                 {<<"content-length">>, integer_to_list(iolist_size(Body2))}),
     {ok, Req2} = cowboy_req:reply(200, Headers2, Body2, Req),
     Req2;
-execute(_, _Headers, _Body, Req) ->
+protect(_, _Headers, _Body, Req) ->
     Req.
