@@ -10,9 +10,7 @@ start(_Type, _Args) ->
                                 100,
                                 [{port, 8080}],
                                 [{env, [{dispatch, Dispatch}]},
-                                 {middlewares, [cowboy_router,
-                                                cowboy_handler,
-                                                middleware_acsrf]}]),
+                                 {onresponse, fun acsrf:protect/4}]),
     acsrf_sup:start_link().
 
 stop(_State) ->
