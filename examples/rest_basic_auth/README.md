@@ -1,5 +1,5 @@
-Hello world example
-===================
+Basic authorization example using REST
+======================================
 
 To try this example, you need GNU `make`, `git` and
 [relx](https://github.com/erlware/relx) in your PATH.
@@ -21,14 +21,28 @@ Then point your browser at [http://localhost:8080](http://localhost:8080).
 Example output
 --------------
 
+Request with no authentication:
+
 ``` bash
 $ curl -i http://localhost:8080
+HTTP/1.1 401 Unauthorized
+connection: keep-alive
+server: Cowboy
+date: Sun, 20 Jan 2013 14:10:27 GMT
+content-length: 0
+www-authenticate: Basic realm="cowboy"
+```
+
+Request with authentication:
+
+``` bash
+$ curl -i -u "Alladin:open sesame" http://localhost:8080
 HTTP/1.1 200 OK
 connection: keep-alive
 server: Cowboy
-date: Fri, 28 Sep 2012 04:10:25 GMT
-content-length: 12
+date: Sun, 20 Jan 2013 14:11:12 GMT
+content-length: 16
 content-type: text/plain
 
-Hello world!
+Hello, Alladin!
 ```
